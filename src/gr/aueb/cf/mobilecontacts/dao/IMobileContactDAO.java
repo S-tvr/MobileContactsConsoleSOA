@@ -14,7 +14,7 @@ public interface IMobileContactDAO {
     List<MobileContact> getAll();
 
     void deleteByPhoneNumber(String phoneNumber);
-    MobileContact getByPhoneNumber(MobileContact mobileContact);
+    MobileContact getByPhoneNumber(String phoneNumber);
     boolean userIdExists(Long id);
     boolean phoneNumberExists(String phoneNumber);
 }

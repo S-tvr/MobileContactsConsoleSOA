@@ -48,7 +48,7 @@ public class MobileContactDAOImpl implements IMobileContactDAO {
     }
 
     @Override
-    public MobileContact getByPhoneNumber(MobileContact mobileContact) {
+    public MobileContact getByPhoneNumber(String phoneNumber) {
         int positionToReturn = getIndexById(id);
         return (positionToReturn != -1 ? contacts.get(positionToReturn) : null);
     }
