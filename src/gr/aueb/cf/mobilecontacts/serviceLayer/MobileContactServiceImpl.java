@@ -5,6 +5,7 @@ import gr.aueb.cf.mobilecontacts.dto.MobileContactInsertDTO;
 import gr.aueb.cf.mobilecontacts.dto.MobileContactUpdateDTO;
 import gr.aueb.cf.mobilecontacts.exceptions.ContactNotFoundException;
 import gr.aueb.cf.mobilecontacts.exceptions.PhoneNumberAlreadyExistsException;
+import gr.aueb.cf.mobilecontacts.mapper.Mapper;
 import gr.aueb.cf.mobilecontacts.model.MobileContact;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public class MobileContactServiceImpl implements IMobileContactService{
                 throw new PhoneNumberAlreadyExistsException("Contact with number:"
                 + dto.getPhoneNumber() + " already exists.");
             }
-            mobileContact = mapInsertDTOToMobileContact(dto);
+            mobileContact = Mapper.mapInsertDTOToMobileContact(dto);
             //καλο είναι σε χρήση crud να γίνεται
             //καταγραφή σε log file (εστω err επειδη δεν έχω log file)
             System.err.printf("MobileContactServiceImpl logger: %s was insert\n", mobileContact );
@@ -78,7 +79,7 @@ public class MobileContactServiceImpl implements IMobileContactService{
             }
 
             //mapping
-            newContact = mapUpdateDTOToMobileContact(dto);
+            newContact = Mapper.mapUpdateDTOToMobileContact(dto);
             System.err.printf("MobileContactServiceImpl logger: %s was updated to: %s", mobileContact, newContact);
             return dao.update(dto.getId(), newContact);
         } catch (ContactNotFoundException | PhoneNumberAlreadyExistsException e) {
@@ -156,13 +157,5 @@ public class MobileContactServiceImpl implements IMobileContactService{
     }
 
 
-    // mapping: Η αντιστοίχιση του MobileContactInsertDTO σε MobileContact
-    // για να το  περάσουμε στην βάση.
-    private MobileContact mapInsertDTOToMobileContact(MobileContactInsertDTO dto) {
-        return new MobileContact(null, dto.getFirstname(), dto.getLastname(), dto.getPhoneNumber());
-    }
 
-    private MobileContact mapUpdateDTOToMobileContact(MobileContactUpdateDTO dto) {
-        return new MobileContact(dto.getId(), dto.getFirstname(), dto.getLastname(), dto.getPhoneNumber());
-    }
 }
